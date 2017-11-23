@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/dashboard">Grout-Monitor</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/history">History</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            <!--<form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search...">
+            </form>-->
+        </div>
+    </div>
+</nav>
+
+<div class="container dashboard-container">
+    <div class="box-wrapper">
+        <div class="box">
+            <h3>Data-01</h3>
+            <svg id="monitor-01" width="500" height="280"></svg>
+        </div>
+    </div>
+    <div class="box-wrapper">
+        <div class="box">
+            <h3>Data-02</h3>
+            <svg id="monitor-02" width="500" height="280"></svg>
+        </div>
+    </div>
+    <div class="box-wrapper">
+        <div class="box">
+            <h3>Data-03</h3>
+            <svg id="moitor-03" width="500" height="280"></svg>
+        </div>
+    </div>
+    <div class="box-wrapper">
+        <div class="box">
+            <h3>Data-04</h3>
+            <svg id="monitor-04" width="500" height="280"></svg>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script>
+    function InitChart() {
+        var data = [{
+            "sale": "202",
+            "year": "2000"
+        }, {
+            "sale": "215",
+            "year": "2002"
+        }, {
+            "sale": "179",
+            "year": "2004"
+        }, {
+            "sale": "199",
+            "year": "2006"
+        }, {
+            "sale": "134",
+            "year": "2008"
+        }, {
+            "sale": "176",
+            "year": "2010"
+        }];
+        var data2 = [{
+            "sale": "152",
+            "year": "2000"
+        }, {
+            "sale": "189",
+            "year": "2002"
+        }, {
+            "sale": "179",
+            "year": "2004"
+        }, {
+            "sale": "199",
+            "year": "2006"
+        }, {
+            "sale": "134",
+            "year": "2008"
+        }, {
+            "sale": "176",
+            "year": "2010"
+        }];
+        var vis = d3.select("#monitor-01"),
+            WIDTH = 500,
+            HEIGHT = 280,
+            MARGINS = {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 50
+            },
+            xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([2000, 2010]),
+            yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([134, 215]),
+            xAxis = d3.svg.axis()
+                .scale(xScale),
+            yAxis = d3.svg.axis()
+                .scale(yScale)
+                .orient("left");
+
+        vis.append("svg:g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+            .call(xAxis);
+        vis.append("svg:g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+            .call(yAxis);
+        var lineGen = d3.svg.line()
+            .x(function(d) {
+                return xScale(d.year);
+            })
+            .y(function(d) {
+                return yScale(d.sale);
+            })
+            .interpolate("basis");
+        vis.append('svg:path')
+            .attr('d', lineGen(data))
+            .attr('stroke', 'green')
+            .attr('stroke-width', 2)
+            .attr('fill', 'none');
+        vis.append('svg:path')
+            .attr('d', lineGen(data2))
+            .attr('stroke', 'blue')
+            .attr('stroke-width', 2)
+            .attr('fill', 'none');
+    }
+    InitChart();
+</script>
+</body>
+</html>
