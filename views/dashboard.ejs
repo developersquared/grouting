@@ -14,6 +14,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
     <link rel="stylesheet" href="/assets/css/style.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -25,51 +26,30 @@
 
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/dashboard">Grout-Monitor</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/history">History</a></li>
-                <li><a href="/logout">Logout</a></li>
-            </ul>
-            <!--<form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>-->
-        </div>
-    </div>
-</nav>
+<% include ./partials/navbar %>
 
 <div class="container dashboard-container">
     <div class="box-wrapper">
         <div class="box">
-            <h3>Data-01</h3>
+            <h4>Data-01</h4>
             <svg id="monitor-01" width="500" height="280"></svg>
         </div>
     </div>
     <div class="box-wrapper">
         <div class="box">
-            <h3>Data-02</h3>
+            <h4>Data-02</h4>
             <svg id="monitor-02" width="500" height="280"></svg>
         </div>
     </div>
     <div class="box-wrapper">
         <div class="box">
-            <h3>Data-03</h3>
+            <h4>Data-03</h4>
             <svg id="moitor-03" width="500" height="280"></svg>
         </div>
     </div>
     <div class="box-wrapper">
         <div class="box">
-            <h3>Data-04</h3>
+            <h4>Data-04</h4>
             <svg id="monitor-04" width="500" height="280"></svg>
         </div>
     </div>
