@@ -124,17 +124,27 @@ body.dashboard p {
 }
 
 .other-status {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .status {
     background-color: #222222;
     padding: 10px;
     text-align: center;
+    width: 24%;
+    margin: 0.5%;
 }
 
 .status p {
     margin: 0;
+}
+
+.status-led-off {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    margin-left: 10px;
 }
 
 .box-wrapper {
