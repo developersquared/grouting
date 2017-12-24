@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var path = require('path');
+var mysql = require('mysql');
+
 var app      = express();
 var port     = process.env.PORT || 8080;
 
@@ -16,6 +18,7 @@ var flash    = require('connect-flash');
 
 // configuration ===============================================================
 // connect to our database
+
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -41,6 +44,10 @@ app.use(session({
  } )); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
+app.use(function(req, res, next) {
+	res.locals.user = req.user;
+	next();
+});
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 

@@ -24,33 +24,53 @@
     <![endif]-->
 </head>
 
-<body>
+<body class="dashboard">
 
 <% include ./partials/navbar %>
-
 <div class="container dashboard-container">
-    <div class="box-wrapper">
-        <div class="box">
-            <h4>Data-01</h4>
-            <svg id="monitor-01" width="500" height="280"></svg>
+    <div class="row main-status">
+        <div class="status col-md-3">
+            <p>전체 시스템 작동 준비</p>
         </div>
     </div>
-    <div class="box-wrapper">
-        <div class="box">
-            <h4>Data-02</h4>
-            <svg id="monitor-02" width="500" height="280"></svg>
+    <div class="row other-status">
+        <div class="status col-md-3">
+            <p>진공 펌프 작동 준비</p>
+        </div>
+        <div class="status col-md-3">
+            <p>그라우트 펌프 작동 준비</p>
+        </div>
+        <div class="status col-md-3">
+            <p>블루투스 및 무선인터넷 작동 여부</p>
+        </div>
+        <div class="status col-md-3">
+            <p>무선 인터넷 신호</p>
         </div>
     </div>
-    <div class="box-wrapper">
-        <div class="box">
-            <h4>Data-03</h4>
-            <svg id="moitor-03" width="500" height="280"></svg>
+    <div class="box-container row">
+        <div class="box-wrapper col-md-6">
+            <div class="box">
+                <h4>Vacuum Pump Vacuum Pressure</h4>
+                <svg id="monitor-01" width="500" height="280"></svg>
+            </div>
         </div>
-    </div>
-    <div class="box-wrapper">
-        <div class="box">
-            <h4>Data-04</h4>
-            <svg id="monitor-04" width="500" height="280"></svg>
+        <div class="box-wrapper col-md-6">
+            <div class="box">
+                <h4>Grouting Pump Injection Pressure</h4>
+                <svg id="monitor-02" width="500" height="280"></svg>
+            </div>
+        </div>
+        <div class="box-wrapper col-md-6">
+            <div class="box">
+                <h4>Airbent 1 Pressure</h4>
+                <svg id="moitor-03" width="500" height="280"></svg>
+            </div>
+        </div>
+        <div class="box-wrapper col-md-6">
+            <div class="box">
+                <h4>Airbent 2 Pressure</h4>
+                <svg id="monitor-04" width="500" height="280"></svg>
+            </div>
         </div>
     </div>
 </div>
@@ -140,12 +160,12 @@
         vis.append('svg:path')
             .attr('d', lineGen(data))
             .attr('stroke', 'green')
-            .attr('stroke-width', 2)
+            .attr('stroke-width', 1)
             .attr('fill', 'none');
         vis.append('svg:path')
             .attr('d', lineGen(data2))
             .attr('stroke', 'blue')
-            .attr('stroke-width', 2)
+            .attr('stroke-width', 1)
             .attr('fill', 'none');
     }
     InitChart();
