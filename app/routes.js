@@ -84,11 +84,11 @@ module.exports = function(app, passport) {
         res.render('graph.ejs');
     });
 
-    app.get('/monitor/airbent-01', isLoggedIn, function(req, res) {
+    app.get('/monitor/airvent-01', isLoggedIn, function(req, res) {
         res.render('graph.ejs');
     });
 
-    app.get('/monitor/airbent-02', isLoggedIn, function(req, res) {
+    app.get('/monitor/airvent-02', isLoggedIn, function(req, res) {
         res.render('graph.ejs');
     });
 
