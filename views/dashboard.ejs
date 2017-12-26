@@ -28,48 +28,63 @@
 
 <% include ./partials/navbar %>
 <div class="container dashboard-container">
-    <div class="row main-status">
-        <div class="status col-md-3">
-            <p>전체 시스템 작동 준비 <span class="status-led-off"></span></p>
+    <div class="row">
+        <div class="main-status">
+            <div class="status col-md-3">
+                <p>전체 시스템 작동 준비 <span class="status-led-off"></span></p>
+            </div>
         </div>
     </div>
-    <div class="row other-status">
-        <div class="status col-md-3">
-            <p>진공 펌프 작동 준비 <span class="status-led-off"></span></p>
-        </div>
-        <div class="status col-md-3">
-            <p>그라우트 펌프 작동 준비 <span class="status-led-off"></span></p>
-        </div>
-        <div class="status col-md-3">
-            <p>블루투스 및 무선인터넷 작동 여부 <span class="status-led-off"></span></p>
-        </div>
-        <div class="status col-md-3">
-            <p>무선 인터넷 신호</p>
+    <div class="row">
+        <div class="other-status">
+            <div class="status col-md-3">
+                <p>진공 펌프 작동 준비 <span class="status-led-off"></span></p>
+            </div>
+            <div class="status col-md-3">
+                <p>그라우트 펌프 작동 준비 <span class="status-led-off"></span></p>
+            </div>
+            <div class="status col-md-3">
+                <p>블루투스 및 무선인터넷 작동 여부 <span class="status-led-off"></span></p>
+            </div>
+            <div class="status col-md-3">
+                <p>무선 인터넷 신호</p>
+            </div>
         </div>
     </div>
-    <div class="box-container row">
-        <div class="box-wrapper col-md-6">
-            <div class="box">
-                <h4>진공펌프 진공압</h4>
-                <svg id="monitor-01" width="500" height="280"></svg>
+    <div class="row" style="margin-top: 40px;">
+        <div class="box-container col-md-8">
+            <div class="box-wrapper col-md-6">
+                <div class="box">
+                    <h4>진공펌프 진공압</h4>
+                    <a href="/monitor/vacuum-pump"><svg id="vacuum_pump" width="500" height="280"></svg></a>
+                </div>
+            </div>
+
+            <div class="box-wrapper col-md-6">
+                <div class="box">
+                    <h4>그라우트펌프 주입압</h4>
+                    <a href="/monitor/grouting-pump"><svg id="grouting_pump" width="500" height="280"></svg></a>
+                </div>
+            </div>
+            <div class="box-wrapper col-md-6">
+                <div class="box">
+                    <h4>Airbent1 진공압</h4>
+                    <a href="/monitor/airbent-01"><svg id="airbent_01" width="500" height="280"></svg></a>
+                </div>
+            </div>
+            <div class="box-wrapper col-md-6">
+                <div class="box">
+                    <h4>Airbent2 진공압</h4>
+                    <a href="/monitor/airbent-02"><svg id="airbent_02" width="500" height="280"></svg></a>
+                </div>
             </div>
         </div>
-        <div class="box-wrapper col-md-6">
-            <div class="box">
-                <h4>그라우트펌프 주입압</h4>
-                <svg id="monitor-02" width="500" height="280"></svg>
+        <div class="controller-box col-md-4">
+            <div class="col-md-6">
+                <div>test</div>
             </div>
-        </div>
-        <div class="box-wrapper col-md-6">
-            <div class="box">
-                <h4>Airbent1 진공압</h4>
-                <svg id="moitor-03" width="500" height="280"></svg>
-            </div>
-        </div>
-        <div class="box-wrapper col-md-6">
-            <div class="box">
-                <h4>Airbent2 진공압</h4>
-                <svg id="monitor-04" width="500" height="280"></svg>
+            <div class="col-md-6">
+                <div>test</div>
             </div>
         </div>
     </div>
@@ -82,7 +97,7 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.js"></script>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
     function InitChart() {
@@ -124,7 +139,7 @@
             "sale": "176",
             "year": "2010"
         }];
-        var vis = d3.select("#monitor-01"),
+        var vis = d3.select("#vacuum_pump"),
             WIDTH = 500,
             HEIGHT = 280,
             MARGINS = {

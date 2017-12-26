@@ -1,0 +1,30 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>Grouting Monitor</title>
+    <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body 		{ padding-top:80px; }
+    </style>
+</head>
+<body class="dashboard">
+<% include ./partials/navbar %>
+<div class="container">
+    <h2>{monitor_name} <span class="status-led-off"></span></h2>
+    <p><a href="/dashboard"><span class="glyphicon glyphicon-menu-left"></span>Back</a></p>
+    <div class="row">
+        <div class="graph-container">
+            <svg></svg>
+        </div>
+        <div class="btn-group controllers" role="group" aria-label="controllers">
+            <button type="button" class="btn btn-default">1HR</button>
+            <button type="button" class="btn btn-default">12HR</button>
+            <button type="button" class="btn btn-default">24HR</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

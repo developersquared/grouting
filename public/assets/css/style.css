@@ -114,28 +114,23 @@ body.dashboard {
 }
 
 body.dashboard h4,
+body.dashboard h2,
 body.dashboard p {
     color: #9d9d9d;
 }
 
-.dashboard-container,
-.box-container {
+.dashboard-container {
     margin-top: 40px;
 }
 
-.other-status {
-    margin-top: 10px;
-}
 
-.status {
-    background-color: #222222;
-    padding: 10px;
-    text-align: center;
-    width: 24%;
-    margin: 0.5%;
+.other-status {
+    margin-top: 20px;
 }
 
 .status p {
+    background-color: #222222;
+    padding: 10px;
     margin: 0;
 }
 
@@ -147,17 +142,62 @@ body.dashboard p {
     margin-left: 10px;
 }
 
-.box-wrapper {
-    min-height: 300px;
+.controller-box .col-md-6 div {
     background-color: #222222;
-    width: 49%;
-    margin: 0.5%;
+    color: #9d9d9d;
+}
+
+.controller-box .col-md-6:nth-child(1) {
+    padding-left: 0px;
+}
+
+.controller-box .col-md-6:nth-child(2) {
+    padding-right: 0px;
+}
+
+.box-wrapper:nth-child(1),
+.box-wrapper:nth-child(3) {
+    padding-left: 0px;
+}
+
+.box-wrapper:nth-child(2),
+.box-wrapper:nth-child(4) {
+    padding-right: 0px;
+}
+
+.box-wrapper:nth-child(1),
+.box-wrapper:nth-child(2) {
+    padding-bottom: 15px;
+}
+
+.box {
+    background-color: #222222;
 }
 
 .box h4 {
     text-align: center;
+    margin-top: 0px;
+    padding-top: 10px;
 }
 
 
+
+.graph-container {
+    margin-top: 40px;
+    min-height: 600px;
+    background-color: #222222;
+    border: 1px solid #151515;
+    border-radius: 4px;
+}
+
+.controllers {
+    margin-top: 20px;
+}
+
+.controllers button {
+    background-color: #222222;
+    border-color: #151515;
+    color: #9d9d9d;
+}
 
 
