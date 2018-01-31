@@ -28,108 +28,21 @@
 
 <% include ./partials/navbar %>
 <div class="container-fluid dashboard-container">
-    <div class="row">
-        <div class="main-status">
-            <div class="status col-md-3">
-                <p>전체 시스템 작동 준비 <span class="status-led-off"></span></p>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="other-status">
-            <div class="status col-md-3">
-                <p>진공 펌프 작동 준비 <span class="status-led-off"></span></p>
-            </div>
-            <div class="status col-md-3">
-                <p>그라우트 펌프 작동 준비 <span class="status-led-off"></span></p>
-            </div>
-            <div class="status col-md-3">
-                <p>블루투스 및 무선인터넷 <span class="status-led-off"></span></p>
-            </div>
-            <div class="status col-md-3">
-                <p>무선 인터넷 신호</p>
-            </div>
-        </div>
-    </div>
-    <div class="row" style="margin-top: 40px;">
-        <div class="box-container col-md-8">
-            <div class="box-wrapper col-md-6">
-                <div class="box">
-                    <h4>진공펌프 진공압</h4>
-                    <a href="/monitor/vacuum-pump"><svg id="vacuum_pump" width="500" height="280"></svg></a>
-                </div>
-            </div>
 
-            <div class="box-wrapper col-md-6">
-                <div class="box">
-                    <h4>그라우트펌프 주입압</h4>
-                    <a href="/monitor/grouting-pump"><svg id="grouting_pump" width="500" height="280"></svg></a>
-                </div>
-            </div>
-            <div class="box-wrapper col-md-6">
-                <div class="box">
-                    <h4>Air Vent1 진공압</h4>
-                    <a href="/monitor/airvent-01"><svg id="airvent_01" width="500" height="280"></svg></a>
-                </div>
-            </div>
-            <div class="box-wrapper col-md-6">
-                <div class="box">
-                    <h4>Air Vent2 진공압</h4>
-                    <a href="/monitor/airvent-02"><svg id="airvent_02" width="500" height="280"></svg></a>
-                </div>
-            </div>
+    <div class="container">
+        <div class="row system-status flex-container">
+            <div class="flex-item"><h2>시스템 상태 <span class="status-led-off"></span></h2></div>
+            <div class="flex-item"><h2>진공 펌프 상태 <span class="status-led-off"></span></h2></div>
+            <div class="flex-item"><h2>그라우트 펌프 상태 <span class="status-led-off"></span></h2></div>
+            <div class="flex-item"><h2>통신 모듈 <span class="status-led-off"></span></h2></div>
         </div>
-        <div class="controller-box col-md-4">
-            <div class="col-md-6">
-                <div>
-                    <h4>주입펌프 <span class="status-led-off"></span></h4>
-                    <div class="pressure-monitor">
-                        <h2 style="text-align: center; margin: 0px;">000000 <span>MPa</span></h2>
-                    </div>
-                    <div class="pressure-monitor">
-                        <h2 style="text-align: center; margin: 0px;">000000 <span>MPa</span></h2>
-                    </div>
-                    <h4>주입압력</h4>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div>
-                    <h4>진공펌프 <span class="status-led-off"></span></h4>
-                    <div class="pressure-monitor">
-                        <h2 style="text-align: center; margin: 0px;">000000 <span>MPa</span></h2>
-                    </div>
-                    <div class="pressure-monitor">
-                        <h2 style="text-align: center; margin: 0px;">000000 <span>MPa</span></h2>
-                    </div>
-                    <h4>진공압력</h4>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div>
-                    <h4>Air Vent 1 <span class="status-led-off"></span></h4>
-                    <div class="pressure-monitor">
-                        <h2 style="text-align: center; margin: 0px;">000000 <span>MPa</span></h2>
-                    </div>
-                    <div class="pressure-monitor">
-                        <h2 style="text-align: center; margin: 0px;">000000 <span>MPa</span></h2>
-                    </div>
-                    <h4>진공압력</h4>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div>
-                    <h4>Air Vent 2 <span class="status-led-off"></span></h4>
-                    <div class="pressure-monitor">
-                        <h2 style="text-align: center; margin: 0px;">000000 <span>MPa</span></h2>
-                    </div>
-                    <div class="pressure-monitor">
-                        <h2 style="text-align: center; margin: 0px;">000000 <span>MPa</span></h2>
-                    </div>
-                    <h4>진공압력</h4>
-                </div>
-            </div>
-        </div>
+        <div class="row pump"></div>
+        <div class="row vacuum-pump"></div>
+        <div class="row air-vent"></div>
+        <div class="row graph"></div>
     </div>
+
+
 </div>
 
 

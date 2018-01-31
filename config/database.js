@@ -1,10 +1,10 @@
 // config/database.js
 module.exports = {
     'connection': {
-        'host': 'clinkdbinstance.cjm4fnbo0bnq.ap-northeast-2.rds.amazonaws.com',
+        'host': 'contekdb.cdefrdxudont.ap-northeast-2.rds.amazonaws.com',
         'user': 'admin',
-        'password': 'clink##1'
+        'password': 'contekenc!!'
     },
-	'database': 'db_contek_grout',
+	'database': 'dbcontek',
     'users_table': 'tb_user'
 };
