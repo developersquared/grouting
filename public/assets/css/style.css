@@ -135,6 +135,37 @@ body.dashboard p {
     margin-top: 20px;
 }
 
+.system-status {
+    margin-bottom: 30px;
+}
+
+.input-pump, .vacuum-pump, .air-vent {
+    background-color: #222222;
+    padding: 10px;
+    margin: 0;
+}
+
+.input-pump h2, .vacuum-pump h2, .air-vent h2 {
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
+
+h4.data-title {
+    margin-left: 20px;
+}
+
+.monitor-data h4 {
+    color: #4cae4c!important;
+}
+
+.input-group .form-control, .input-group-addon, .input-group-btn {
+    display: initial!important;
+}
+
+.col-xs-6 .input-group > input.form-control {
+    width: 40%;
+}
+
 .status p {
     background-color: #222222;
     padding: 10px;

@@ -9,40 +9,125 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
-
     <title>Dashboard</title>
-
     <!-- Bootstrap core CSS -->
     <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="/assets/css/d3.linechart.css">
     <link rel="stylesheet" href="/assets/css/style.css">
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
     <![endif]-->
 </head>
-
 <body class="dashboard">
-
 <% include ./partials/navbar %>
 <div class="container-fluid dashboard-container">
-
     <div class="container">
         <div class="row system-status flex-container">
-            <div class="flex-item"><h2>시스템 상태 <span class="status-led-off"></span></h2></div>
+            <!--<div class="flex-item"><h2>시스템 상태 <span class="status-led-off"></span></h2></div>-->
             <div class="flex-item"><h2>진공 펌프 상태 <span class="status-led-off"></span></h2></div>
             <div class="flex-item"><h2>그라우트 펌프 상태 <span class="status-led-off"></span></h2></div>
             <div class="flex-item"><h2>통신 모듈 <span class="status-led-off"></span></h2></div>
         </div>
-        <div class="row pump"></div>
-        <div class="row vacuum-pump"></div>
-        <div class="row air-vent"></div>
-        <div class="row graph"></div>
+        <br />
+        <div class="row input-pump">
+            <h2>주입 펌프</h2>
+            <div class="row input-velocity">
+                <div class="col-xs-6">
+                    <h4 class="data-title">주입 속도</h4>
+                </div>
+                <div class="col-xs-6 monitor-data">
+                    <div class="col-sm-6">
+                        <h4><%- JSON.stringify(data.grout_flow_meter) %></h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="0000.000">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Update</button>
+                            </span>
+                        </div><!-- /input-group -->
+                    </div>
+                </div>
+            </div>
+            <div class="row input-pressure">
+                <div class="col-xs-6">
+                    <h4 class="data-title">주입 압력</h4>
+                </div>
+                <div class="col-xs-6 monitor-data">
+                    <div class="col-xs-12">
+                        <h4><%- JSON.stringify(data.grout_press) %></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row vacuum-pump">
+            <h2>진공 펌프</h2>
+            <div class="row input-velocity">
+                <div class="col-xs-6">
+                    <h4 class="data-title">진공 압력</h4>
+                </div>
+                <div class="col-xs-6 monitor-data">
+                    <div class="col-sm-6">
+                        <h4><%- JSON.stringify(data.vacuum_meter) %></h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="0000.000">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Update</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row input-pressure">
+                <div class="col-xs-6">
+                    <h4 class="data-title">기체충실율</h4>
+                </div>
+                <div class="col-xs-6 monitor-data">
+                    <div class="col-xs-12">
+                        <h4>{0000.000}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row air-vent">
+            <h2>Air Vent</h2>
+            <div class="row input-velocity">
+                <div class="col-xs-6">
+                    <h4 class="data-title">Air Vent-1</h4>
+                </div>
+                <div class="col-xs-6 monitor-data">
+                    <div class="col-xs-12">
+                        <h4><%- JSON.stringify(data.vent_1) %></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row input-pressure">
+                <div class="col-xs-6">
+                    <h4 class="data-title">Air Vent-2</h4>
+                </div>
+                <div class="col-xs-6 monitor-data">
+                    <div class="col-xs-12">
+                        <h4><%- JSON.stringify(data.vent_2) %></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <svg id="linechart"></svg>
+        <button id="button">Generate random data</button>
+
+
+
+
+
     </div>
-
-
 </div>
 
 
@@ -50,11 +135,13 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
 <script src="/assets/bootstrap/js/bootstrap.js"></script>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script>
+<script src="/assets/d3.core.js"></script>
+<script src="/assets/d3.linechart.js"></script>
+<!--<script>
     function InitChart() {
         var data = [{
             "sale": "202",
@@ -139,6 +226,171 @@
             .attr('fill', 'none');
     }
     InitChart();
-</script>
+</script>-->
+
+<!--<script>
+
+
+    // Define margins
+    var margin = {top: 20, right: 80, bottom: 30, left: 50},
+        width = parseInt(d3.select("#chart").style("width")) - margin.left - margin.right,
+        height = parseInt(d3.select("#chart").style("height")) - margin.top - margin.bottom;
+
+    // Define date parser
+    var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
+
+    // Define scales
+    var xScale = d3.time.scale().range([0, width]);
+    var yScale = d3.scale.linear().range([height, 0]);
+    var color = d3.scale.ordinal()
+        .range(["#8c510a", "#dfc27d", "#35978f"]);
+
+    // Define axes
+    var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+    var yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+    // Define lines
+    var line = d3.svg.line().interpolate("basis")
+        .x(function(d) { return xScale(d["date"]); })
+        .y(function(d) { return yScale(d["concentration"]); });
+
+    // Define svg canvas
+    var svg = d3.select("#chart")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // Read in data
+    d3.csv("giniLine.csv", function(error, data){
+        if (error) throw error;
+
+        // Set the color domain equal to the three product categories
+        var productCategories = d3.keys(data[0]).filter(function(key){return (key !== "Order Month") && (key !== "metric")})
+        color.domain(productCategories);
+
+        // console.log(JSON.stringify(data, null, 2)) // to view the structure
+
+        // Format the data field
+        data.forEach(function(d){
+            d["Order Month"] = parseDate(d["Order Month"])
+        });
+
+        // Filter the data to only include a single metric
+        var subset = data.filter(function(el) {return el.metric === "Quantity" });
+        // console.log(JSON.stringify(subset, null, 2))
+
+        // Reformat data to make it more copasetic for d3
+        // data = An array of objects
+        // concentrations = An array of three objects, each of which contains an array of objects
+        var concentrations = productCategories.map(function(category){
+            return {category: category, datapoints: subset.map(function(d){
+                return {date: d["Order Month"], concentration: +d[category]}
+            })}
+        })
+        // console.log(JSON.stringify(concentrations, null, 2)) // to view the structure
+
+        // Set the domain of the axes
+        xScale.domain(d3.extent(subset, function(d) {return d["Order Month"]; }));
+
+        yScale.domain([0.25, 0.5]);
+
+        // Place the axes on the chart
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("class", "label")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .attr("dx", ".71em")
+            .style("text-anchor", "beginning")
+            .text("Product Concentration");
+
+        var products = svg.selectAll(".category")
+            .data(concentrations)
+            .enter().append("g")
+            .attr("class", "category");
+
+        products.append("path")
+            .attr("class", "line")
+            .attr("d", function(d) {return line(d.datapoints); })
+            .style("stroke", function(d) {return color(d.category); });
+
+        // console.log(JSON.stringify(d3.values(concentrations), null, 2)) // to view the structure
+        console.log(d3.values(concentrations)); // to view the structure
+        console.log(concentrations);
+        // console.log(concentrations.map(function()))
+    });
+
+    // Define responsive behavior
+    function resize() {
+        var width = parseInt(d3.select("#chart").style("width")) - margin.left - margin.right,
+            height = parseInt(d3.select("#chart").style("height")) - margin.top - margin.bottom;
+
+        // Update the range of the scale with new width/height
+        xScale.range([0, width]);
+        yScale.range([height, 0]);
+
+        // Update the axis and text with the new scale
+        svg.select('.x.axis')
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        svg.select('.y.axis')
+            .call(yAxis);
+
+        // Force D3 to recalculate and update the line
+        svg.selectAll('.line')
+            .attr("d", function(d) { return line(d.datapoints); });
+
+        // Update the tick marks
+        xAxis.ticks(Math.max(width/75, 2));
+        yAxis.ticks(Math.max(height/50, 2));
+
+    };
+
+    // Call the resize function whenever a resize event occurs
+    d3.select(window).on('resize', resize);
+
+    // Call the resize function
+    resize();
+
+
+</script>-->
+<!--<script type="text/javascript">
+    $(document).ready(function() {
+        var linechart = new D3LineChart({
+            container: "#linechart"
+        });
+        linechart.show();
+
+        $("#button").on("click", function() {
+            var newData = new Array();
+            var year = getRandomInt(2005, 2014);
+            var numCategories = getRandomInt(1, 2);
+            for (var i=0; i<numCategories; i++) {
+                var category = {};
+                category.key = "category "+i;
+                category.values = new Array();
+                for (var j=year; j<=2015; j++) {
+                    category.values.push({ x: j, y: getRandomInt(-50, 50) });
+                };
+                newData.push(category);
+            }
+            linechart.dataset = newData;
+            linechart.update();
+        });
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    });
+</script>-->
 </body>
 </html>

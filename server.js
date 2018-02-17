@@ -16,8 +16,23 @@ var port     = process.env.PORT || 8080;
 var passport = require('passport');
 var flash    = require('connect-flash');
 
+var db = mysql.createConnection({
+	host: 'contekdb.cdefrdxudont.ap-northeast-2.rds.amazonaws.com',
+	user: 'admin',
+	password: 'contekenc!!',
+	database: 'dbcontek'
+});
+
 // configuration ===============================================================
 // connect to our database
+
+//db.connect(function(err) {
+//	if(err) {
+//		throw err;
+//	} else {
+//		console.log("Connected to Database");
+//	}
+//});
 
 
 require('./config/passport')(passport); // pass passport for configuration
@@ -57,3 +72,4 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 // launch ======================================================================
 app.listen(port);
 console.log('The magic happens on port ' + port);
+

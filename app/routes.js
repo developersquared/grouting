@@ -1,4 +1,14 @@
 // app/routes.js
+var mysql = require('mysql');
+
+
+var connection = mysql.createConnection({
+	host: 'contekdb.cdefrdxudont.ap-northeast-2.rds.amazonaws.com',
+	user: 'admin',
+	password: 'contekenc!!',
+	database: 'dbcontek'
+});
+
 module.exports = function(app, passport) {
 
 
@@ -64,11 +74,39 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/dashboard', isLoggedIn, function(req, res) {
-		res.render('dashboard.ejs', {
-			user : req.user
-		});
+        connection.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1', function(err, result) {
+            if(err) {
+                throw err;
+            } else {
+                res.render('dashboard.ejs', {
+                    user : req.user,
+					data : result[0]
+                });
+            }
+        });
 	});
 
+	app.get('/test', function(req, res) {
+        connection.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1', function(err, result) {
+            if(err) {
+                throw err;
+            } else {
+                res.json(result);
+            }
+        });
+	});
+
+	app.get('/dbtest', function(req, res) {
+		connection.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1', function(err, result) {
+			if(err) {
+				throw err;
+			} else {
+				//obj = {print: result};
+				res.json(result);
+			}
+
+		});
+	});
 	// app.get('/monitor/:graph', isLoggedIn, function(req, res) {
 	// 	var graphSelection = req.params.graph;
 	// 	res.render('graph.ejs', {
