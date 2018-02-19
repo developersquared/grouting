@@ -331,7 +331,7 @@ input[type="number"], button.btn-default {
 
     h4.data-title {
         margin-left: 0px;
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .col-md-3 h2 {
@@ -341,5 +341,9 @@ input[type="number"], button.btn-default {
     .monitor-data .col-sm-4 h4,
     .monitor-data .col-xs-12 h4 {
         margin-left: 10px;
+    }
+
+    .monitor-data {
+        padding: 0px;
     }
 }
