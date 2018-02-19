@@ -139,13 +139,13 @@ body.dashboard p {
     margin-bottom: 30px;
 }
 
-.input-pump, .vacuum-pump, .air-vent {
+.input-pump, .vacuum-pump, .air-vent, .graph {
     background-color: #222222;
     padding: 10px;
     margin: 0;
 }
 
-.input-pump h2, .vacuum-pump h2, .air-vent h2 {
+.input-pump h2, .vacuum-pump h2, .air-vent h2, .graph h2 {
     margin-left: 40px;
     margin-bottom: 20px;
 }
