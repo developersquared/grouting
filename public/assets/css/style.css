@@ -318,3 +318,28 @@ input[type="number"], button.btn-default {
         padding-top: 0px;
     }
 }
+
+@media (max-width: 568px) {
+    .flex-item h2 {
+        font-size: 15px;
+    }
+
+    .status-led-off {
+        top: 0px;
+        margin-left: 2px;
+    }
+
+    h4.data-title {
+        margin-left: 0px;
+        font-size: 16px;
+    }
+
+    .col-md-3 h2 {
+        margin-left: 0px;
+    }
+
+    .monitor-data .col-sm-4 h4,
+    .monitor-data .col-xs-12 h4 {
+        margin-left: 10px;
+    }
+}
