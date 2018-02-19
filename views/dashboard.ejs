@@ -34,88 +34,100 @@
         </div>
         <br />
         <div class="row input-pump">
-            <h2>주입 펌프</h2>
-            <div class="row input-velocity">
-                <div class="col-xs-6">
-                    <h4 class="data-title">주입 속도</h4>
-                </div>
-                <div class="col-xs-6 monitor-data">
-                    <div class="col-sm-6">
-                        <h4><%- JSON.stringify(data.grout_flow_meter) %></h4>
+            <div class="col-md-3">
+                <h2>주입 펌프</h2>
+            </div>
+            <div class="col-md-9">
+                <div class="row input-velocity">
+                    <div class="col-xs-4">
+                        <h4 class="data-title">주입 속도</h4>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="0000.000">
-                            <span class="input-group-btn">
+                    <div class="col-xs-8 monitor-data">
+                        <div class="col-sm-4">
+                            <h4><%- JSON.stringify(data.grout_flow_meter) %></h4>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="number" class="form-control" placeholder="0000.000">
+                                <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">Update</button>
                             </span>
-                        </div><!-- /input-group -->
+                            </div><!-- /input-group -->
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row input-pressure">
-                <div class="col-xs-6">
-                    <h4 class="data-title">주입 압력</h4>
-                </div>
-                <div class="col-xs-6 monitor-data">
-                    <div class="col-xs-12">
-                        <h4><%- JSON.stringify(data.grout_press) %></h4>
+                <div class="row input-pressure">
+                    <div class="col-xs-4">
+                        <h4 class="data-title">주입 압력</h4>
+                    </div>
+                    <div class="col-xs-6 monitor-data">
+                        <div class="col-xs-12">
+                            <h4><%- JSON.stringify(data.grout_press) %></h4>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <br />
         <div class="row vacuum-pump">
-            <h2>진공 펌프</h2>
-            <div class="row input-velocity">
-                <div class="col-xs-6">
-                    <h4 class="data-title">진공 압력</h4>
-                </div>
-                <div class="col-xs-6 monitor-data">
-                    <div class="col-sm-6">
-                        <h4><%- JSON.stringify(data.vacuum_meter) %></h4>
+            <div class="col-md-3">
+                <h2>진공 펌프</h2>
+            </div>
+            <div class="col-md-9">
+                <div class="row input-velocity">
+                    <div class="col-xs-4">
+                        <h4 class="data-title">진공 압력</h4>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="0000.000">
-                            <span class="input-group-btn">
+                    <div class="col-xs-8 monitor-data">
+                        <div class="col-sm-4">
+                            <h4><%- JSON.stringify(data.vacuum_meter) %></h4>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="number" class="form-control" placeholder="0000.000">
+                                <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">Update</button>
                             </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row input-pressure">
-                <div class="col-xs-6">
-                    <h4 class="data-title">기체충실율</h4>
-                </div>
-                <div class="col-xs-6 monitor-data">
-                    <div class="col-xs-12">
-                        <h4>{0000.000}</h4>
+                <div class="row input-pressure">
+                    <div class="col-xs-4">
+                        <h4 class="data-title">기체충실율</h4>
+                    </div>
+                    <div class="col-xs-6 monitor-data">
+                        <div class="col-xs-12">
+                            <h4>{0000.000}</h4>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <br />
         <div class="row air-vent">
-            <h2>Air Vent</h2>
-            <div class="row input-velocity">
-                <div class="col-xs-6">
-                    <h4 class="data-title">Air Vent-1</h4>
-                </div>
-                <div class="col-xs-6 monitor-data">
-                    <div class="col-xs-12">
-                        <h4><%- JSON.stringify(data.vent_1) %></h4>
+            <div class="col-md-3">
+                <h2>Air Vent</h2>
+            </div>
+            <div class="col-md-9">
+                <div class="row input-velocity">
+                    <div class="col-xs-4">
+                        <h4 class="data-title">Air Vent-1</h4>
+                    </div>
+                    <div class="col-xs-6 monitor-data">
+                        <div class="col-xs-12">
+                            <h4><%- JSON.stringify(data.vent_1) %></h4>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row input-pressure">
-                <div class="col-xs-6">
-                    <h4 class="data-title">Air Vent-2</h4>
-                </div>
-                <div class="col-xs-6 monitor-data">
-                    <div class="col-xs-12">
-                        <h4><%- JSON.stringify(data.vent_2) %></h4>
+                <div class="row input-pressure">
+                    <div class="col-xs-4">
+                        <h4 class="data-title">Air Vent-2</h4>
+                    </div>
+                    <div class="col-xs-6 monitor-data">
+                        <div class="col-xs-12">
+                            <h4><%- JSON.stringify(data.vent_2) %></h4>
+                        </div>
                     </div>
                 </div>
             </div>

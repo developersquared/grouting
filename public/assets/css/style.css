@@ -151,19 +151,25 @@ body.dashboard p {
 }
 
 h4.data-title {
-    margin-left: 20px;
+    margin-left: 40px;
 }
 
 .monitor-data h4 {
     color: #4cae4c!important;
 }
 
-.input-group .form-control, .input-group-addon, .input-group-btn {
+/*.input-group .form-control, .input-group-addon, .input-group-btn {
     display: initial!important;
 }
 
 .col-xs-6 .input-group > input.form-control {
     width: 40%;
+}*/
+
+input[type="number"], button.btn-default {
+    background-color:#222;
+    border-color: #151515;
+    color: #9d9d9d;
 }
 
 .status p {
@@ -178,6 +184,8 @@ h4.data-title {
     height: 10px;
     background-color: red;
     margin-left: 10px;
+    position: relative;
+    top: -5px;
 }
 
 .controller-box .col-md-6 div {
