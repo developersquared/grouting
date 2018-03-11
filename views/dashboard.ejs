@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-xs-8 monitor-data">
                         <div class="col-sm-4">
-                            <h4><%- JSON.stringify(data.grout_flow_meter) %></h4>
+                            <h4><%- JSON.stringify(result[0][0].grout_flow_meter) %></h4>
                         </div>
                         <div class="col-sm-8">
                             <div class="input-group">
@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-xs-6 monitor-data">
                         <div class="col-xs-12">
-                            <h4><%- JSON.stringify(data.grout_press) %></h4>
+                            <h4><%- JSON.stringify(result[0][0].grout_press) %></h4>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-xs-8 monitor-data">
                         <div class="col-sm-4">
-                            <h4><%- JSON.stringify(data.vacuum_meter) %></h4>
+                            <h4><%- JSON.stringify(result[0][0].vacuum_meter) %></h4>
                         </div>
                         <div class="col-sm-8">
                             <div class="input-group">
@@ -115,7 +115,7 @@
                     </div>
                     <div class="col-xs-6 monitor-data">
                         <div class="col-xs-12">
-                            <h4><%- JSON.stringify(data.vent_1) %></h4>
+                            <h4><%- JSON.stringify(result[0][0].vent_1) %></h4>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                     </div>
                     <div class="col-xs-6 monitor-data">
                         <div class="col-xs-12">
-                            <h4><%- JSON.stringify(data.vent_2) %></h4>
+                            <h4><%- JSON.stringify(result[0][0].vent_2) %></h4>
                         </div>
                     </div>
                 </div>
@@ -136,6 +136,7 @@
             <div class="col-md-3">
                 <h2>Graph</h2>
             </div>
+            <h2><%- JSON.stringify(result[1][0].rcv_time) %></h2>
             <div class="col-md-12">
                 <div class="ct-chart"></div>
             </div>
@@ -152,12 +153,14 @@
 <script src="/assets/js/moment.js"></script>
 <script src="/assets/js/chartist.js"></script>
 <script>
+    var myVar = <%- JSON.stringify(result[1])%>;
+    console.log(myVar);
     var chart = new Chartist.Line('.ct-chart', {
         series: [
             {
                 name: 'series-1',
                 data: [
-                    {x: new Date(143134652600), y: 53},
+                    {x: new Date(143104652600), y: <%- JSON.stringify(result[1][0].vacuum_meter) %>},
                     {x: new Date(143234652600), y: 40},
                     {x: new Date(143340052600), y: 45},
                     {x: new Date(143366652600), y: 40},

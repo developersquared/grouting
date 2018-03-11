@@ -2,11 +2,12 @@
 var mysql = require('mysql');
 
 
-var connection = mysql.createConnection({
+var pool = mysql.createPool({
 	host: 'contekdb.cdefrdxudont.ap-northeast-2.rds.amazonaws.com',
 	user: 'admin',
 	password: 'contekenc!!',
-	database: 'dbcontek'
+	database: 'dbcontek',
+	multipleStatements: true
 });
 
 module.exports = function(app, passport) {
@@ -74,35 +75,40 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/dashboard', isLoggedIn, function(req, res) {
-        connection.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1', function(err, result) {
+        pool.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1; SELECT rcv_time, vacuum_meter FROM tb_grout_data ORDER BY rcv_time ASC LIMIT 10', function(err, result) {
             if(err) {
                 throw err;
             } else {
+
+
                 res.render('dashboard.ejs', {
                     user : req.user,
-					data : result[0]
+					result : result
                 });
             }
         });
 	});
 
 	app.get('/test', function(req, res) {
-        connection.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1', function(err, result) {
+		var data;
+        pool.query('SELECT rcv_time, vacuum_meter FROM tb_grout_data ORDER BY rcv_time ASC LIMIT 10; SELECT rcv_time, vacuum_meter FROM tb_grout_data ORDER BY rcv_time ASC LIMIT 10', function(err, result) {
             if(err) {
                 throw err;
             } else {
+            	data = result;
                 res.json(result);
             }
         });
 	});
 
 	app.get('/dbtest', function(req, res) {
-		connection.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1', function(err, result) {
+		pool.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1; SELECT rcv_time, vacuum_meter FROM tb_grout_data ORDER BY rcv_time ASC LIMIT 10', function(err, result) {
 			if(err) {
 				throw err;
 			} else {
 				//obj = {print: result};
-				res.json(result);
+
+				res.json(result[1]);
 			}
 
 		});
