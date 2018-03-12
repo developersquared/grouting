@@ -12,8 +12,6 @@ var pool = mysql.createPool({
 });
 
 module.exports = function(app, passport) {
-
-
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
@@ -114,30 +112,6 @@ module.exports = function(app, passport) {
 
 		});
 	});
-	// app.get('/monitor/:graph', isLoggedIn, function(req, res) {
-	// 	var graphSelection = req.params.graph;
-	// 	res.render('graph.ejs', {
-	// 		graph: graphSelection
-	// 	});
-	// });
-
-	app.get('/monitor/vacuum-pump', isLoggedIn, function(req, res) {
-	    res.render('graph.ejs');
-    });
-
-    app.get('/monitor/grouting-pump', isLoggedIn, function(req, res) {
-        res.render('graph.ejs');
-    });
-
-    app.get('/monitor/airvent-01', isLoggedIn, function(req, res) {
-        res.render('graph.ejs');
-    });
-
-    app.get('/monitor/airvent-02', isLoggedIn, function(req, res) {
-        res.render('graph.ejs');
-    });
-
-
 
 	// =====================================
 	// LOGOUT ==============================

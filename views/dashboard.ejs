@@ -152,10 +152,6 @@
 <script src="/assets/js/moment.js"></script>
 <script src="/assets/js/chartist.js"></script>
 <script>
-    console.log(new Date(143234652600));
-    console.log(<%- JSON.stringify(result[1][0].rcv_time) %>);
-    console.log(moment(<%- JSON.stringify(result[1][0].rcv_time) %>, 'h:mm:ss.SSS a'));
-
     var chart = new Chartist.Line('.ct-chart', {
         series: [
             {
