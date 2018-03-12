@@ -137,7 +137,7 @@
                 <h2>Graph</h2>
             </div>
             <div class="col-md-12">
-                <div class="ct-chart"></div>
+                <div class="ct-chart" height="400px"></div>
             </div>
         </div>
     </div>
@@ -179,12 +179,14 @@
                 type: Chartist.FixedScaleAxis,
                 divisor: 10,
                 labelInterpolationFnc: function(value) {
-                    return moment(value).format('h:mm:ss.SSS a');
+                    return moment(value).format('h:mm:s.S a');
                 }
         },
 
         fullWidth: true,
-        height: 300
+        height: 300,
+        high: 150,
+        low: 0
 
     });
 </script>
