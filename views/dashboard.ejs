@@ -136,7 +136,6 @@
             <div class="col-md-3">
                 <h2>Graph</h2>
             </div>
-            <h2><%- JSON.stringify(result[1][0].rcv_time) %></h2>
             <div class="col-md-12">
                 <div class="ct-chart"></div>
             </div>
@@ -153,32 +152,40 @@
 <script src="/assets/js/moment.js"></script>
 <script src="/assets/js/chartist.js"></script>
 <script>
-    var myVar = <%- JSON.stringify(result[1])%>;
-    console.log(myVar);
+    console.log(new Date(143234652600));
+    console.log(<%- JSON.stringify(result[1][0].rcv_time) %>);
+    console.log(moment(<%- JSON.stringify(result[1][0].rcv_time) %>, 'h:mm:ss.SSS a'));
+
     var chart = new Chartist.Line('.ct-chart', {
         series: [
             {
                 name: 'series-1',
                 data: [
-                    {x: new Date(143104652600), y: <%- JSON.stringify(result[1][0].vacuum_meter) %>},
-                    {x: new Date(143234652600), y: 40},
-                    {x: new Date(143340052600), y: 45},
-                    {x: new Date(143366652600), y: 40},
-                    {x: new Date(143410652600), y: 20},
-                    {x: new Date(143508652600), y: 32},
-                    {x: new Date(143569652600), y: 18},
-                    {x: new Date(143579652600), y: 11}
+                    {x: new Date(moment(<%- JSON.stringify(result[1][0].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][0].vacuum_meter) %>'},
+                    {x: new Date(moment(<%- JSON.stringify(result[1][1].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][1].vacuum_meter) %>'},
+                    {x: new Date(moment(<%- JSON.stringify(result[1][2].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][2].vacuum_meter) %>'},
+                    {x: new Date(moment(<%- JSON.stringify(result[1][3].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][3].vacuum_meter) %>'},
+                    {x: new Date(moment(<%- JSON.stringify(result[1][4].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][4].vacuum_meter) %>'},
+                    {x: new Date(moment(<%- JSON.stringify(result[1][5].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][5].vacuum_meter) %>'},
+                    {x: new Date(moment(<%- JSON.stringify(result[1][6].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][6].vacuum_meter) %>'},
+                    {x: new Date(moment(<%- JSON.stringify(result[1][7].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][7].vacuum_meter) %>'},
+                    {x: new Date(moment(<%- JSON.stringify(result[1][9].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][8].vacuum_meter) %>'},
+                    {x: new Date(moment(<%- JSON.stringify(result[1][9].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][9].vacuum_meter) %>'}
                 ]
             }
         ]
     }, {
-        axisX: {
-            type: Chartist.FixedScaleAxis,
-            divisor: 5,
-            labelInterpolationFnc: function(value) {
-                return moment(value).format('MMM D');
-            }
-        }
+            axisX: {
+                type: Chartist.FixedScaleAxis,
+                divisor: 10,
+                labelInterpolationFnc: function(value) {
+                    return moment(value).format('h:mm:ss.SSS a');
+                }
+        },
+
+        fullWidth: true,
+        height: 300
+
     });
 </script>
 </body>

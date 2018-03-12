@@ -158,14 +158,6 @@ h4.data-title {
     color: #4cae4c!important;
 }
 
-/*.input-group .form-control, .input-group-addon, .input-group-btn {
-    display: initial!important;
-}
-
-.col-xs-6 .input-group > input.form-control {
-    width: 40%;
-}*/
-
 input[type="number"], button.btn-default {
     background-color:#222;
     border-color: #151515;
@@ -188,91 +180,30 @@ input[type="number"], button.btn-default {
     top: -5px;
 }
 
-.controller-box .col-md-6 div {
-    background-color: #222222;
-    color: #9d9d9d;
+.graph > .col-md-12 {
+    padding: 0px;
 }
 
-.controller-box .col-md-6:nth-child(1),
-.controller-box .col-md-6:nth-child(3) {
-    padding-left: 0px;
+.ct-chart {
+    position: relative;
+    right: 10px;
 }
 
-.controller-box .col-md-6:nth-child(2),
-.controller-box .col-md-6:nth-child(4) {
-    padding-right: 0px;
+/* Chartist JS Configuration*/
+.ct-label {
+    color: rgba(76, 174, 76, 0.8);
 }
 
-.controller-box .col-md-6:nth-child(3),
-.controller-box .col-md-6:nth-child(4) {
-    padding-top: 30px;
+.ct-grid {
+    stroke: rgba(76, 174, 76, 0.8);
 }
 
-.box-wrapper:nth-child(1),
-.box-wrapper:nth-child(3) {
-    padding-left: 0px;
-}
+.ct-series-a .ct-point, .ct-series-a .ct-line, .ct-series-a .ct-bar, .ct-series-a .ct-slice-donut {
+    stroke: #4cae4c; }
 
-.box-wrapper:nth-child(2),
-.box-wrapper:nth-child(4) {
-    padding-right: 0px;
-}
-
-.box-wrapper:nth-child(1),
-.box-wrapper:nth-child(2) {
-    padding-bottom: 30px;
-}
-
-.box {
-    background-color: #222222;
-    padding: 20px;
-}
-
-.box h4 {
-    text-align: center;
-    margin: 0px;
-    padding-top: 10px;
-}
-
-.controller-box .col-md-6 > div {
-    padding: 20px;
-}
-
-.controller-box h4 {
-    margin: 0px;
-    padding: 10px;
-}
-
-.controller-box h4:last-child {
-    text-align: center;
-}
-
-.controller-box h2 span {
-    font-size: 0.7em;
-}
-
-
-.graph-container {
-    margin-top: 40px;
-    min-height: 600px;
-    background-color: #222222;
-    border: 1px solid #151515;
-    border-radius: 4px;
-}
-
-.controllers {
-    margin-top: 20px;
-}
-
-.controllers button {
-    background-color: #222222;
-    border-color: #151515;
-    color: #9d9d9d;
-}
-
-.pressure-monitor h2 {
-    padding: 5px;
-}
+.ct-series-a .ct-slice-pie, .ct-series-a .ct-slice-donut-solid, .ct-series-a .ct-area {
+    fill: #4cae4c; }
+/**/
 
 
 @media only screen and (max-width: 981px) {
