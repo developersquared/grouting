@@ -205,6 +205,9 @@ input[type="number"], button.btn-default {
     fill: #4cae4c; }
 
 
+.modal-dialog {
+    top: 25vh;
+}
 /**/
 
 

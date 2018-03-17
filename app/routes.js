@@ -3,7 +3,7 @@ var mysql = require('mysql');
 var moment = require('moment');
 
 
-var pool = mysql.createPool({
+var con = mysql.createConnection({
 	host: 'contekdb.cdefrdxudont.ap-northeast-2.rds.amazonaws.com',
 	user: 'admin',
 	password: 'contekenc!!',
@@ -74,7 +74,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/dashboard', isLoggedIn, function(req, res) {
-        pool.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1; SELECT rcv_time, vacuum_meter FROM tb_grout_data ORDER BY rcv_time ASC LIMIT 10', function(err, result) {
+        con.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1; SELECT rcv_time, vacuum_meter FROM tb_grout_data ORDER BY rcv_time ASC LIMIT 10; SELECT * FROM tb_grout_status ORDER BY op_time DESC LIMIT 1', function(err, result) {
             if(err) {
                 throw err;
             } else {
@@ -87,32 +87,31 @@ module.exports = function(app, passport) {
             }
         });
 	});
-
-	app.get('/test', function(req, res) {
-		var data;
-        pool.query('SELECT rcv_time, vacuum_meter FROM tb_grout_data ORDER BY rcv_time ASC LIMIT 10; SELECT rcv_time, vacuum_meter FROM tb_grout_data ORDER BY rcv_time ASC LIMIT 10', function(err, result) {
-            if(err) {
-                throw err;
-            } else {
-            	data = result;
-                res.json(result);
-            }
-        });
-	});
-
-	app.get('/dbtest', function(req, res) {
-		pool.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1; SELECT rcv_time, vacuum_meter FROM tb_grout_data ORDER BY rcv_time ASC LIMIT 10', function(err, result) {
-			if(err) {
-				throw err;
-			} else {
-				//obj = {print: result};
-
-				res.json(result[1]);
-			}
-
+	app.post('/grout-meter-input/:value', function(req, res) {
+        var x = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        var sql = "INSERT INTO tb_grout_data (grout_flow_meter, send_time) VALUES ('" + req.params.value + "', '" + x + "')";
+        //Connect to the database pool
+        con.query(sql, function (err) {
+        	if (err) throw err;
+        	console.log("grout-meter-input data has been inserted");
+        	res.redirect('/dashboard');
 		});
-	});
-
+        //Insert the value from URL into the database using a query string
+        //Redirect to /dashboard
+    });
+    app.post('/vacuum-meter-input/:value', function(req, res) {
+        var x = new Date();
+        var data1 = x.toString();
+        var sql = "INSERT INTO tb_grout_data (vacuum_meter, send_time) VALUES ('" + req.params.value + "', '" + data1 + "')";
+        //Connect to the database pool
+        con.query(sql, function (err) {
+        	if (err) throw err;
+        	console.log("vacuum-meter-input data has been inserted");
+        	res.redirect('/dashboard');
+		});
+        //Insert the value from URL into the database using a query string
+        //Redirect to /dashboard
+    });
 	// =====================================
 	// LOGOUT ==============================
 	// =====================================

@@ -46,12 +46,14 @@
                             <h4><%- JSON.stringify(result[0][0].grout_flow_meter) %></h4>
                         </div>
                         <div class="col-sm-8">
-                            <div class="input-group">
-                                <input type="number" class="form-control" placeholder="0000.000">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Update</button>
-                            </span>
-                            </div><!-- /input-group -->
+                            <form id="grout-meter-form">
+                                <div class="input-group">
+                                    <input id="grout-meter-input" type="number" class="form-control" placeholder="0000.000">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Update</button>
+                                </span>
+                                </div><!-- /input-group -->
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -82,12 +84,14 @@
                             <h4><%- JSON.stringify(result[0][0].vacuum_meter) %></h4>
                         </div>
                         <div class="col-sm-8">
-                            <div class="input-group">
-                                <input type="number" class="form-control" placeholder="0000.000">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Update</button>
-                            </span>
-                            </div>
+                            <form id="vacuum-meter-form">
+                                <div class="input-group">
+                                    <input id="vacuum-meter-input" type="number" class="form-control" placeholder="0000.000">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Update</button>
+                                </span>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -143,6 +147,23 @@
     </div>
 </div>
 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">연격제어 상태</h4>
+            </div>
+            <div class="modal-body">
+                <p>원격제어 제한 상태입니다.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -151,7 +172,38 @@
 <script src="/assets/bootstrap/js/bootstrap.js"></script>
 <script src="/assets/js/moment.js"></script>
 <script src="/assets/js/chartist.js"></script>
+<script src="http://localhost:9001/socket.io/socket.io.js"></script>
 <script>
+    var remoteVar = <%- JSON.stringify(result[2][0] )%>;
+    plcRemote = remoteVar.plc_remote_on;
+    console.log(remoteVar);
+
+    var socket = io.connect('http://localhost:9001');
+
+    socket.on('connect', function() {
+        console.log('socket connected');
+    });
+
+    if (plcRemote == "0") {
+        $('#myModal').modal('show');
+    } else {
+        $('#grout-meter-form').submit(function (e) {
+            e.preventDefault();
+            var groutInput = $('#grout-meter-input').val();
+            $.ajax({
+                url: '/grout-meter-input/' + groutInput,
+                type: 'post'
+            });
+            console.log(groutInput);
+        });
+        $('#vacuum-meter-form').submit(function (e) {
+            e.preventDefault();
+            var vacuumInput = $('#vacuum-meter-input').val();
+            console.log(vacuumInput);
+        });
+
+    }
+
     var chart = new Chartist.Line('.ct-chart', {
         series: [
             {
