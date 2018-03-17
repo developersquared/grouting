@@ -176,14 +176,17 @@
 <script>
     // Storing a variable from the latest row of tb_grout_status
     var remoteVar = <%- JSON.stringify(result[2][0] )%>;
-    console.log(remoteVar);
-    console.log('test');
     var plcRemote = remoteVar.plc_remote_on;
     var groutStatus = remoteVar.grout_run;
     var vacuumStatus = remoteVar.vacuum_run
 
     // Connect to socket with port 9001
-    var socket = io.connect('http://localhost:9001');
+    var io = io('http://localhost:9001');
+
+    // Log when a new client is connected
+    io.on('connect', function () {
+        console.log('socket connected');
+    });
 
     // Change CSS of status-led-x upon database value input
     if ( groutStatus !== "0") {
@@ -255,9 +258,8 @@
         },
 
         fullWidth: true,
-        height: 300,
-        high: 150,
-        low: 0
+        height: 300
+
 
     });
 </script>
