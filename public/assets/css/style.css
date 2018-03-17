@@ -180,6 +180,16 @@ input[type="number"], button.btn-default {
     top: -5px;
 }
 
+.status-led-on {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #4cae4c;
+    margin-left: 10px;
+    position: relative;
+    top: -5px;
+}
+
 .graph > .col-md-12 {
     padding: 0px;
 }

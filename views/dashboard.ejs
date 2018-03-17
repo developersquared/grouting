@@ -27,8 +27,8 @@
     <div class="container">
         <div class="row system-status flex-container">
             <!--<div class="flex-item"><h2>시스템 상태 <span class="status-led-off"></span></h2></div>-->
-            <div class="flex-item"><h2>진공 펌프 상태 <span class="status-led-off"></span></h2></div>
-            <div class="flex-item"><h2>그라우트 펌프 상태 <span class="status-led-off"></span></h2></div>
+            <div class="flex-item"><h2>진공 펌프 상태 <span id="grout-status" class="status-led-off"></span></h2></div>
+            <div class="flex-item"><h2>그라우트 펌프 상태 <span id="vacuum-status" class="status-led-off"></span></h2></div>
             <div class="flex-item"><h2>통신 모듈 <span class="status-led-off"></span></h2></div>
         </div>
         <br />
@@ -50,9 +50,9 @@
                                 <div class="input-group">
                                     <input id="grout-meter-input" type="number" class="form-control" placeholder="0000.000">
                                     <span class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">Update</button>
-                                </span>
-                                </div><!-- /input-group -->
+                                        <button class="btn btn-default" type="submit" id="grout-input-btn">Update</button>
+                                    </span>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -87,9 +87,9 @@
                             <form id="vacuum-meter-form">
                                 <div class="input-group">
                                     <input id="vacuum-meter-input" type="number" class="form-control" placeholder="0000.000">
-                                    <span class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">Update</button>
-                                </span>
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-default" type="submit" id="vacuum-input-btn">Update</button>
+                                    </span>
                                 </div>
                             </form>
                         </div>
@@ -174,19 +174,41 @@
 <script src="/assets/js/chartist.js"></script>
 <script src="http://localhost:9001/socket.io/socket.io.js"></script>
 <script>
+    // Storing a variable from the latest row of tb_grout_status
     var remoteVar = <%- JSON.stringify(result[2][0] )%>;
-    plcRemote = remoteVar.plc_remote_on;
-    console.log(remoteVar);
+    var plcRemote = remoteVar.plc_remote_on;
+    var groutStatus = remoteVar.grout_run;
+    var vacuumStatus = remoteVar.vacuum_run
 
+    // Connect to socket with port 9001
     var socket = io.connect('http://localhost:9001');
 
+    // Log when a new client is connected
     socket.on('connect', function() {
         console.log('socket connected');
     });
 
+    // Change CSS of status-led-x upon database value input
+    if ( groutStatus !== "0") {
+        $('#grout-status').addClass('status-led-on').removeClass('status-led-off');
+    }
+    if ( vacuumStatus !== "0") {
+        $('#vacuum-status').addClass('status-led-on').removeClass('status-led-off');
+    }
+
+    // Update Buttons disabled with a modal when plc_remont_on is 0
     if (plcRemote == "0") {
-        $('#myModal').modal('show');
-    } else {
+        $('#grout-input-btn').click(function (e) {
+           e.preventDefault();
+           $('#myModal').modal('show');
+        });
+        $('#vacuum-input-btn').click(function (e) {
+            e.preventDefault();
+            $('#myModal').modal('show');
+        });
+    }
+    // Else allow update button to send ajax request to update database
+    else {
         $('#grout-meter-form').submit(function (e) {
             e.preventDefault();
             var groutInput = $('#grout-meter-input').val();
@@ -194,8 +216,6 @@
                 url: '/grout-meter-input/' + groutInput,
                 type: 'post'
             });
-            console.log(groutInput);
-
             socket.emit('grout_in', groutInput);
         });
         $('#vacuum-meter-form').submit(function (e) {
@@ -205,13 +225,11 @@
                 url: '/vacuum-meter-input/' + vacuumInput,
                 type: 'post'
             });
-            console.log(vacuumInput);
-
             socket.emit('vacuum-in', vacuumInput);
         });
-
     }
 
+    // Draw line chart from the last 10 rows from database table
     var chart = new Chartist.Line('.ct-chart', {
         series: [
             {
