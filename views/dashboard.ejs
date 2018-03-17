@@ -195,11 +195,19 @@
                 type: 'post'
             });
             console.log(groutInput);
+
+            socket.emit('grout_in', groutInput);
         });
         $('#vacuum-meter-form').submit(function (e) {
             e.preventDefault();
             var vacuumInput = $('#vacuum-meter-input').val();
+            $.ajax({
+                url: '/vacuum-meter-input/' + vacuumInput,
+                type: 'post'
+            });
             console.log(vacuumInput);
+
+            socket.emit('vacuum-in', vacuumInput);
         });
 
     }

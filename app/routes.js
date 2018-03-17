@@ -89,7 +89,7 @@ module.exports = function(app, passport) {
 	});
 	app.post('/grout-meter-input/:value', function(req, res) {
         var x = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        var sql = "INSERT INTO tb_grout_data (grout_flow_meter, send_time) VALUES ('" + req.params.value + "', '" + x + "')";
+        var sql = "INSERT INTO tb_grout_command (grout_flow_meter, op_time) VALUES ('" + req.params.value + "', '" + x + "')";
         //Connect to the database pool
         con.query(sql, function (err) {
         	if (err) throw err;
@@ -100,9 +100,8 @@ module.exports = function(app, passport) {
         //Redirect to /dashboard
     });
     app.post('/vacuum-meter-input/:value', function(req, res) {
-        var x = new Date();
-        var data1 = x.toString();
-        var sql = "INSERT INTO tb_grout_data (vacuum_meter, send_time) VALUES ('" + req.params.value + "', '" + data1 + "')";
+        var x = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        var sql = "INSERT INTO tb_grout_command (vacuum_meter, op_time) VALUES ('" + req.params.value + "', '" + x + "')";
         //Connect to the database pool
         con.query(sql, function (err) {
         	if (err) throw err;
