@@ -74,7 +74,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/dashboard', isLoggedIn, function(req, res) {
-        con.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1; SELECT rcv_time, vacuum_meter FROM tb_grout_data ORDER BY rcv_time ASC LIMIT 10; SELECT * FROM tb_grout_status ORDER BY op_time DESC LIMIT 1', function(err, result) {
+        con.query('SELECT * FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 1; SELECT rcv_time, vacuum_meter FROM tb_grout_data ORDER BY rcv_time DESC LIMIT 10; SELECT * FROM tb_grout_status ORDER BY op_time DESC LIMIT 1', function(err, result) {
             if(err) {
                 throw err;
             } else {

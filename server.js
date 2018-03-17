@@ -16,12 +16,6 @@ var port     = process.env.PORT || 8080;
 var passport = require('passport');
 var flash    = require('connect-flash');
 
-var db = mysql.createConnection({
-	host: 'contekdb.cdefrdxudont.ap-northeast-2.rds.amazonaws.com',
-	user: 'admin',
-	password: 'contekenc!!',
-	database: 'dbcontek'
-});
 
 
 // configuration ===============================================================
@@ -65,7 +59,6 @@ app.use(function(req, res, next) {
 	next();
 });
 app.use(flash()); // use connect-flash for flash messages stored in session
-
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
