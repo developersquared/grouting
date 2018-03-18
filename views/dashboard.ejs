@@ -173,7 +173,7 @@
 <script src="/assets/bootstrap/js/bootstrap.js"></script>
 <script src="/assets/js/moment.js"></script>
 <script src="/assets/js/chartist.js"></script>
-<script src="http://localhost:9001/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script>
     // Storing a variable from the latest row of tb_grout_status
     var remoteVar = <%- JSON.stringify(result[2][0] )%>;
@@ -211,7 +211,7 @@
     // Else allow update button to send ajax request to update database
     else {
         $('#switch').click(function () {
-            $(this).toggleClass('off');
+            $(this).toggleClass('on');
         });
 
         $('#grout-meter-form').submit(function (e) {
