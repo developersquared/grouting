@@ -27,9 +27,10 @@
     <div class="container">
         <div class="row system-status flex-container">
             <!--<div class="flex-item"><h2>시스템 상태 <span class="status-led-off"></span></h2></div>-->
-            <div class="flex-item"><h2>진공 펌프 상태 <span id="grout-status" class="status-led-off"></span></h2></div>
-            <div class="flex-item"><h2>그라우트 펌프 상태 <span id="vacuum-status" class="status-led-off"></span></h2></div>
-            <div class="flex-item"><h2>통신 모듈 <span class="status-led-off"></span></h2></div>
+            <div class="col-md-3"><h2>진공 펌프 상태 <span id="grout-status" class="status-led-off"></span></h2></div>
+            <div class="col-md-4"><h2>그라우트 펌프 상태 <span id="vacuum-status" class="status-led-off"></span></h2></div>
+            <div class="col-md-3"><h2>통신 모듈 <span class="status-led-off"></span></h2></div>
+            <div class="col-md-2"><div id="switch"></div></div>
         </div>
         <br />
         <div class="row input-pump">
@@ -209,6 +210,10 @@
     }
     // Else allow update button to send ajax request to update database
     else {
+        $('#switch').click(function () {
+            $(this).toggleClass('off');
+        });
+
         $('#grout-meter-form').submit(function (e) {
             e.preventDefault();
             var groutInput = $('#grout-meter-input').val();

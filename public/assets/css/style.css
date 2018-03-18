@@ -124,7 +124,23 @@ body.dashboard p {
     justify-content: space-between;
 }
 
+.system-status h2 {
+    font-size: 24px;
+}
 
+#switch {
+    margin-top: 10px;
+    background-image: url('../img/slider-switch.png');
+    background-repeat: no-repeat;
+    background-size: 500px 200px;
+    background-position: -100px -81px;
+    height: 44px;
+    width: 107px;
+}
+
+.off {
+    background-position: -271px -81px!important;
+}
 
 .dashboard-container {
     margin-top: 40px;
@@ -222,7 +238,7 @@ input[type="number"], button.btn-default {
 
 
 @media (max-width: 568px) {
-    .flex-item h2 {
+    .flex-item h3 {
         font-size: 15px;
     }
 
