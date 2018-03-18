@@ -2,7 +2,6 @@
 var mysql = require('mysql');
 var moment = require('moment');
 
-
 var con = mysql.createConnection({
 	host: 'contekdb.cdefrdxudont.ap-northeast-2.rds.amazonaws.com',
 	user: 'admin',

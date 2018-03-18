@@ -16,6 +16,9 @@ var port     = process.env.PORT || 8080;
 var passport = require('passport');
 var flash    = require('connect-flash');
 
+var server = app.listen(9001);
+var io = require('socket.io').listen(server);
+
 // configuration ===============================================================
 // connect to our database
 
