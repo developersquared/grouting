@@ -15,22 +15,19 @@ var port     = process.env.PORT || 8080;
 
 var passport = require('passport');
 var flash    = require('connect-flash');
+var io = require('socket.io-client');
 
 // configuration ===============================================================
-// connect to our database
-
-//db.connect(function(err) {
-//	if(err) {
-//		throw err;
-//	} else {
-//		console.log("Connected to Database");
-//	}
-//});
-
 
 require('./config/passport')(passport); // pass passport for configuration
 
+var socket = io.connect('http://localhost:9001', {
+    reconnect: false
+});
 
+socket.on('data_in', function (data) {
+    console.log("socket data_in:"+data);
+});
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console

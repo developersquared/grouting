@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-xs-8 monitor-data">
                         <div class="col-sm-4">
-                            <h4><%- JSON.stringify(result[0][0].grout_flow_meter) %></h4>
+                            <h4 id="grout-flow-meter"></h4>
                         </div>
                         <div class="col-sm-8">
                             <form id="grout-meter-form">
@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-xs-6 monitor-data">
                         <div class="col-xs-12">
-                            <h4><%- JSON.stringify(result[0][0].grout_press) %></h4>
+                            <h4 id="grout-press"></h4>
                         </div>
                     </div>
                 </div>
@@ -82,13 +82,13 @@
                     </div>
                     <div class="col-xs-8 monitor-data">
                         <div class="col-sm-4">
-                            <h4><%- JSON.stringify(result[0][0].vacuum_meter) %></h4>
+                            <h4 id="vacuum-meter"></h4>
                         </div>
                         <div class="col-sm-8">
                             <form id="vacuum-meter-form">
                                 <div class="input-group">
                                     <input id="vacuum-meter-input" type="number" class="form-control" placeholder="0000.000">
-                                        <span class="input-group-btn">
+                                    <span class="input-group-btn">
                                         <button class="btn btn-default" type="submit" id="vacuum-input-btn">Update</button>
                                     </span>
                                 </div>
@@ -120,7 +120,7 @@
                     </div>
                     <div class="col-xs-6 monitor-data">
                         <div class="col-xs-12">
-                            <h4><%- JSON.stringify(result[0][0].vent_1) %></h4>
+                            <h4 id="vent-01"></h4>
                         </div>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                     </div>
                     <div class="col-xs-6 monitor-data">
                         <div class="col-xs-12">
-                            <h4><%- JSON.stringify(result[0][0].vent_2) %></h4>
+                            <h4 id="vent-02"></h4>
                         </div>
                     </div>
                 </div>
@@ -173,99 +173,122 @@
 <script src="/assets/bootstrap/js/bootstrap.js"></script>
 <script src="/assets/js/moment.js"></script>
 <script src="/assets/js/chartist.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script src="http://localhost:9001/socket.io/socket.io.js"></script>
 <script>
-    // Storing a variable from the latest row of tb_grout_status
-    var remoteVar = <%- JSON.stringify(result[2][0] )%>;
-    var plcRemote = remoteVar.plc_remote_on;
-    var groutStatus = remoteVar.grout_run;
-    var vacuumStatus = remoteVar.vacuum_run
+    $(function () {
+        // Connect to socket with port 9001
+        var io = io('http://localhost:9001');
 
-    // Connect to socket with port 9001
-    var io = io('http://localhost:9001');
-
-    // Log when a new client is connected
-    io.on('connect', function () {
-        console.log('socket connected');
-    });
-
-    // Change CSS of status-led-x upon database value input
-    if ( groutStatus !== "0") {
-        $('#grout-status').addClass('status-led-on').removeClass('status-led-off');
-    }
-    if ( vacuumStatus !== "0") {
-        $('#vacuum-status').addClass('status-led-on').removeClass('status-led-off');
-    }
-
-    // Update Buttons disabled with a modal when plc_remont_on is 0
-    if (plcRemote == "0") {
-        $('#grout-input-btn').click(function (e) {
-           e.preventDefault();
-           $('#myModal').modal('show');
-        });
-        $('#vacuum-input-btn').click(function (e) {
-            e.preventDefault();
-            $('#myModal').modal('show');
-        });
-    }
-    // Else allow update button to send ajax request to update database
-    else {
-        $('#switch').click(function () {
-            $(this).toggleClass('on');
+        // Log when a new client is connected
+        io.on('connect', function () {
+            io.emit('connected from client');
+            console.log('socket connected');
         });
 
-        $('#grout-meter-form').submit(function (e) {
+        io.on('connection', function(socket) {
+            socket.on('data_in', function(data) {
+                //Store data from socket into variables
+                //tb_grout_data
+                groutFlowMeter = data[0][0].grout_flow_meter;
+                groutPress = data[0][0].grout_press;
+                vacuumMeter = data[0][0].vacuum_meter;
+                vent1 = data[0][0].vent_1;
+                vent2 = data[0][0].vent_2;
+
+                //Store graph data
+                graphData = data[1];
+
+                //tb_grout_status
+                plcRemote = data[2][0].plc_remote_on;
+                groutStatus = data[2][0].grout_run;
+                vacuumStatus = data[2][0].vacuum_run;
+
+                //Set the values into html using jquery set
+                $('#grout-flow-meter').text(groutFlowMeter);
+                $('#grout-press').text(groutPress);
+                $('#vacuum-meter').text(vacuumMeter);
+                $('#vent-01').text(vent1);
+                $('#vent-02').text(vent2);
+
+                // Draw line chart from the last 10 rows from database table
+                var chart = new Chartist.Line('.ct-chart', {
+                    series: [
+                        {
+                            name: 'series-1',
+                            data: [
+                                {x: new Date(moment(graphData[0].rcv_time, 'h:mm:ss.SSS a')), y: graphData[0].vacuum_meter},
+                                {x: new Date(moment(graphData[1].rcv_time, 'h:mm:ss.SSS a')), y: graphData[0].vacuum_meter},
+                                {x: new Date(moment(graphData[2].rcv_time, 'h:mm:ss.SSS a')), y: graphData[0].vacuum_meter},
+                                {x: new Date(moment(graphData[3].rcv_time, 'h:mm:ss.SSS a')), y: graphData[0].vacuum_meter},
+                                {x: new Date(moment(graphData[4].rcv_time, 'h:mm:ss.SSS a')), y: graphData[0].vacuum_meter},
+                                {x: new Date(moment(graphData[5].rcv_time, 'h:mm:ss.SSS a')), y: graphData[0].vacuum_meter},
+                                {x: new Date(moment(graphData[6].rcv_time, 'h:mm:ss.SSS a')), y: graphData[0].vacuum_meter},
+                                {x: new Date(moment(graphData[7].rcv_time, 'h:mm:ss.SSS a')), y: graphData[0].vacuum_meter},
+                                {x: new Date(moment(graphData[8].rcv_time, 'h:mm:ss.SSS a')), y: graphData[0].vacuum_meter},
+                                {x: new Date(moment(graphData[9].rcv_time, 'h:mm:ss.SSS a')), y: graphData[0].vacuum_meter}
+                            ]
+                        }
+                    ]
+                }, {
+                    axisX: {
+                        type: Chartist.FixedScaleAxis,
+                        divisor: 10,
+                        labelInterpolationFnc: function(value) {
+                            return moment(value).format('h:mm:s.S a');
+                        }
+                    },
+                    fullWidth: true,
+                    height: 300
+                });
+
+                //Reload client browser
+                location.reload();
+            });
+        });
+
+        $('#grout-meter-form').submit(function(e) {
             e.preventDefault();
             var groutInput = $('#grout-meter-input').val();
-            $.ajax({
-                url: '/grout-meter-input/' + groutInput,
-                type: 'post'
-            });
-            socket.emit('grout_in', groutInput);
+            io.emit('grout_in', groutInput);
+            console.log('grout_in ' + groutInput);
+            //Reload client browser
+            location.reload();
         });
-        $('#vacuum-meter-form').submit(function (e) {
+
+        $('#vacuum-meter-form').submit(function(e) {
             e.preventDefault();
             var vacuumInput = $('#vacuum-meter-input').val();
-            $.ajax({
-                url: '/vacuum-meter-input/' + vacuumInput,
-                type: 'post'
-            });
-            socket.emit('vacuum-in', vacuumInput);
+            io.emit('vacuum_in', vacuumInput);
+            console.log('vacuum_in ' + vacuumInput);
+            //Reload client browser
+            location.reload();
         });
-    }
 
-    // Draw line chart from the last 10 rows from database table
-    var chart = new Chartist.Line('.ct-chart', {
-        series: [
-            {
-                name: 'series-1',
-                data: [
-                    {x: new Date(moment(<%- JSON.stringify(result[1][0].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][0].vacuum_meter) %>'},
-                    {x: new Date(moment(<%- JSON.stringify(result[1][1].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][1].vacuum_meter) %>'},
-                    {x: new Date(moment(<%- JSON.stringify(result[1][2].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][2].vacuum_meter) %>'},
-                    {x: new Date(moment(<%- JSON.stringify(result[1][3].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][3].vacuum_meter) %>'},
-                    {x: new Date(moment(<%- JSON.stringify(result[1][4].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][4].vacuum_meter) %>'},
-                    {x: new Date(moment(<%- JSON.stringify(result[1][5].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][5].vacuum_meter) %>'},
-                    {x: new Date(moment(<%- JSON.stringify(result[1][6].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][6].vacuum_meter) %>'},
-                    {x: new Date(moment(<%- JSON.stringify(result[1][7].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][7].vacuum_meter) %>'},
-                    {x: new Date(moment(<%- JSON.stringify(result[1][9].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][8].vacuum_meter) %>'},
-                    {x: new Date(moment(<%- JSON.stringify(result[1][9].rcv_time) %>, 'h:mm:ss.SSS a')), y: '<%- JSON.stringify(result[1][9].vacuum_meter) %>'}
-                ]
-            }
-        ]
-    }, {
-            axisX: {
-                type: Chartist.FixedScaleAxis,
-                divisor: 10,
-                labelInterpolationFnc: function(value) {
-                    return moment(value).format('h:mm:s.S a');
-                }
-        },
+        // Change CSS of status-led-x upon database value input
+        if ( groutStatus !== "0") {
+            $('#grout-status').addClass('status-led-on').removeClass('status-led-off');
+        }
+        if ( vacuumStatus !== "0") {
+            $('#vacuum-status').addClass('status-led-on').removeClass('status-led-off');
+        }
 
-        fullWidth: true,
-        height: 300
-
-
+        // Update Buttons disabled with a modal when plc_remont_on is 0
+        if (plcRemote == "0") {
+            $('#grout-input-btn').click(function (e) {
+                e.preventDefault();
+                $('#myModal').modal('show');
+            });
+            $('#vacuum-input-btn').click(function (e) {
+                e.preventDefault();
+                $('#myModal').modal('show');
+            });
+        }
+        // Else allow update button to send ajax request to update database
+        else {
+            $('#switch').click(function () {
+                $(this).toggleClass('on');
+            });
+        }
     });
 </script>
 </body>
